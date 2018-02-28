@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Le Temps!</title>
+        <style>
+            .pages{display:inline-block}
+        </style>
+    </head>
+    <body>
+        <h1 th:text="${location.name}"/>
+
+        <table style="width:100%">
+            <tbody>
+                <tr valign="top">
+                    <td>
+
+                        <p th:if="${error != null}" th:text="${error}"></p>
+                        <p th:if="${success != null}" th:text="${success}"></p>
+
+
+                        <div>
+                            <h4>Ilmoita Lämpötila (Celcius)</h4>
+
+                            <form th:method="POST" th:action="${'/location/' + {location.id} + '/' + {datePath} + '/' + {page} + '/observation'}">  
+
+                                <input type="text" style="width:60px" name="temperature" placeholder="lämpötila" />
+                                <input type="submit" value="Ilmoita!"/> 
+                            </form>
+                        </div>
+                        <div>
+                            <h4>Sijainti</h4>
+                            <span th:text="${location.x}  "/> 
+                            <span th:text="${location.y}" />
+                        </div>
+                        <div>
+                            <h4>Aikavyöhyke</h4>
+                            <span th:text="${location.timezone.getDisplayName()}  "/> 
+                        </div>
+                        <br/>
+                        <div>
+                            <h4>Tiedot paikallisen ajan mukaan</h4>
+                            <p>   
+                                <span>viimeisin havainto:</span>
+                                <span th:text="${current} ? ${current.formatPrintTempAndTime()} : 'ei havaintoja!'"></span>
+                                <br/>
+                                <span>kylmin (24h aikana): </span>
+                                <span th:text="${coldest} ? ${coldest.formatPrintTempAndTime()} : 'ei havaintoja 24tunnin sisällä!'"></span>
+                                <br/>
+                                <span>kuumin (24h aikan):</span>
+                                <span th:text="${hottest} ? ${hottest.formatPrintTempAndTime()} : 'ei havaintoja 24tunnin sisällä!'"></span>
+                            </p>
+
+
+                        </div>
+                        <div>
+                            <a href="/"> Etusivulle </a> 
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <h4>Havainnot</h4>
+
+                            <div th:if="${observations}">
+                                <p th:each="temp:${observations} " >
+                                    <span th:text="${temp.formatPrintTempAndTime()}" />
+                                </p>
+                                <br/>                               
+                            </div>
+                            <div th:unless="${observations}">
+                                <p>ei havaintoja tällä sivulla!</p>
+                            </div>
+                            <div>
+                                <p> Hae lämpötilalistaukset päivämäärän mukaan </p>
+                                <form th:method="GET" th:action="${'/location/' + {location.id}}">  
+
+                                    <input type="date" name="date" />
+                                    <input type="submit" value="hae!"/> 
+                                </form>
+                            </div>
+                            <span>sivut:</span>
+                            <div class="pages" th:each="page:${pages}">
+                                <a th:href="${page}" th:text="${page} "></a><br/>
+                                <span> </span>
+                            </div>
+                        </div>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>

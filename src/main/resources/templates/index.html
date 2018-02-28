@@ -2,17 +2,62 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>Le Temps!</title>
+        <style>
+            thead {color:green;}
+            tbody {color:black;}
+
+            table, th, td {
+                border: 1px solid black;
+            }
+        </style>
     </head>
     <body>
         <h1>Observations</h1>
 
+        <p th:if="${error != null}" th:text="${error}"></p>
+        <p th:if="${success != null}" th:text="${success}"></p>
         <div>
             <ul>
-                <li th:each="spot:${observationSpots}">
-                    <span th:text="${spot.name}"/><br/>                
-
+                <li th:each="location:${locations}">
+                    <a th:href="${'/location/' + {location.id} +'/' + {datePath} + '/0'}"  th:text="${location.name}"/>
+                       
+                    <br/> 
                 </li>
             </ul>
+        </div>
+        <div>
+            <h3>havainnot paikallisen ajan mukaan</h3>
+        </div>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Paikkaaa</th>
+                        <th>lisää havainto </th>
+                        <th>Viimeisin havainto</th>
+                        <th>Kuumin (24h aikana)</th>
+                        <th>Kylmin (24h aikana)</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr th:each="location:${locations}">
+                        <td> <a th:href="${'/location/' + {location.id} +'/' + {datePath} + '/0'}"  th:text="${location.name}"/> </td>
+                        <td>
+                            <form th:method="POST" th:action="${'/location/' + {location.id} + '/observation'}">  
+                                <input type="text" name="temperature" placeholder="lämpötila" />
+                                <input type="submit" value="Päivitä!"/>
+                            </form>
+                        </td>
+                        <td th:text="${last[location.id]} ? ${last[location.id].formatPrintTempAndTime()} : 'ei havaintoja!'"></td>
+
+                       <td th:text="${hottest[location.id]} ? ${hottest[location.id].formatPrintTempAndTime()} : 'ei havaintoja!'"></td>
+                        <td th:text="${coldest[location.id]} ? ${coldest[location.id].formatPrintTempAndTime()} : 'ei havaintoja!'"></td>
+
+                        
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </body>
 </html>
