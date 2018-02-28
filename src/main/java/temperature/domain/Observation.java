@@ -56,9 +56,16 @@ public class Observation extends AbstractPersistable<Long> {
         return "" + minute + ':' + hourOfDay + ' ' + dayOfMonth + '-' + month + '-' + year;
     }
 
-    public String formatPrintTempAndTime() {
+    public String getDisplayTime() {
         int minute = observationTime.get(Calendar.MINUTE);
         int hourOfDay = observationTime.get(Calendar.HOUR_OF_DAY);
-        return "" + temperature + "℃ " + hourOfDay + ':' + minute;
+        return "" + hourOfDay + ':' + minute;
+    }
+
+    public String getDisplayDate() {
+        int year = observationTime.get(Calendar.YEAR);
+        int month = observationTime.get(Calendar.MONTH) + 1;
+        int day = observationTime.get(Calendar.DAY_OF_MONTH);
+        return "" + day + '-' + month + '-' + year;
     }
 }

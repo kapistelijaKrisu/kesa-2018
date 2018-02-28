@@ -47,9 +47,15 @@
                                 <input type="submit" value="Päivitä!"/>
                             </form>
                         </td>
-                        <td th:text="${last[location.id]} ? ${last[location.id].formatPrintTempAndTime()} : 'ei havaintoja!'"></td>
-                        <td th:text="${hottest[location.id]} ? ${hottest[location.id].formatPrintTempAndTime()} : 'ei havaintoja!'"></td>
-                        <td th:text="${coldest[location.id]} ? ${coldest[location.id].formatPrintTempAndTime()} : 'ei havaintoja!'"></td>
+                        <td th:text="${last[location.id]} 
+                            ? ${last[location.id].temperature}+'℃ ' + ${last[location.id].getDisplayTime()}
+                            : 'ei havaintoja!'"></td>
+                        <td th:text="${hottest[location.id]} 
+                            ? ${hottest[location.id].temperature}+'℃ ' + ${hottest[location.id].getDisplayTime()} 
+                            : 'ei havaintoja!'"></td>
+                        <td th:text="${coldest[location.id]} 
+                            ? ${coldest[location.id].temperature}+'℃ ' + ${coldest[location.id].getDisplayTime()} 
+                            : 'ei havaintoja!'"></td>
                     </tr>
                 </tbody>
             </table>

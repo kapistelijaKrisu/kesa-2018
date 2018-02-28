@@ -45,7 +45,7 @@ public class LocationController {
         model.addAttribute("location", location);
         model.addAttribute("coldest", statService.coldestIn24h(location));
         model.addAttribute("hottest", statService.hottestIn24h(location));
-        model.addAttribute("current", statService.getLatestObservation(location));
+        model.addAttribute("last", statService.getLatestObservation(location));
         model.addAttribute("observations", observations);
         model.addAttribute("pages", observationLister.createPagingByLocationObservationsByDate(page, location, calendar));
         model.addAttribute("page", page);

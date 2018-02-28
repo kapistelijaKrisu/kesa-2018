@@ -34,29 +34,65 @@
                         </div>
                         <br/>
                         <div>
-                            <h4>Tiedot paikallisen ajan mukaan</h4>
-                            <p>   
-                                <span>viimeisin havainto:</span>
-                                <span th:text="${current} ? ${current.formatPrintTempAndTime()} : 'ei havaintoja!'"></span>
-                                <br/>
-                                <span>kylmin (24h aikana): </span>
-                                <span th:text="${coldest} ? ${coldest.formatPrintTempAndTime()} : 'ei havaintoja 24tunnin sisällä!'"></span>
-                                <br/>
-                                <span>kuumin (24h aikan):</span>
-                                <span th:text="${hottest} ? ${hottest.formatPrintTempAndTime()} : 'ei havaintoja 24tunnin sisällä!'"></span>
-                            </p>
+                            <h3>Tiedot paikallisen ajan mukaan </h3>                                         
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Havainto</th>
+                                        <th>Lämpötila</th>
+                                        <th>Kellonaika</th>
+                                        <th>Päivämäärä</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Viimeisin</td>
+                                        <td th:text="${last.temperature} + '℃'" />
+                                        <td th:text="${last.getDisplayTime()}" />    
+                                        <td th:text="${last.getDisplayDate()}" />    
+                                    </tr>
+                                    <tr>
+                                        <td>Kuumin (24h aikana)</td>
+                                        <td th:text="${hottest.temperature} + '℃'" />
+                                        <td th:text="${hottest.getDisplayTime()}" />    
+                                        <td th:text="${hottest.getDisplayDate()}" />    
+                                    </tr>
+                                    <tr>
+                                        <td>Kylmin (24h aikana)</td>
+                                        <td th:text="${coldest.temperature} + '℃'" />
+                                        <td th:text="${coldest.getDisplayTime()}" />    
+                                        <td th:text="${coldest.getDisplayDate()}" />    
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
+                        <br/>
                         <div>
                             <a href="/"> Etusivulle </a> 
                         </div>
                     </td>
                     <td style="width:50%">
                         <div>
-                            <h4 th:text="${'Havainnot päivälle ' + {datePath} + ' paikallista aikaa' }" />
+                            <h3 th:text="${'Havainnot päivälle ' + {datePath} + ' paikallista aikaa' }" />
                             <div th:if="${observations}">
-                                <p th:each="temp:${observations} " >
-                                    <span th:text="${temp.formatPrintTempAndTime()}" />
-                                </p>                  
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>lämpötila</th>
+                                            <th>aika</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="temp:${observations}">
+                                            <td>
+                                                <span th:text="${temp.temperature} + '℃'" />
+                                            </td> 
+                                            <td>
+                                                <span th:text="${temp.getDisplayTime()}" />
+                                            </td> 
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                             <div th:unless="${observations}">
                                 <p th:text="${'ei havaintoja sivulla: ' + {page} + '!'}"/>
