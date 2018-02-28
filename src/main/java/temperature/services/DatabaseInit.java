@@ -67,11 +67,11 @@ public class DatabaseInit {
                     int temp = r.nextInt(60) - 30;
                     
                     Calendar time = Calendar.getInstance();
-                    time.add(Calendar.MINUTE, r.nextInt(300000) * -1);
+                    time.add(Calendar.MINUTE, r.nextInt(10000) * -1);
                     time.setTimeZone(locationTimeZone);
                     
                     observations.add(new Observation(location, temp, time));
-                    Thread.sleep(10);
+                    Thread.sleep(20);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(DatabaseInit.class.getName()).log(Level.SEVERE, null, ex);
                 }
