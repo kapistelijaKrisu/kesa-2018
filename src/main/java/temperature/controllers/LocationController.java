@@ -50,6 +50,7 @@ public class LocationController {
         model.addAttribute("pages", observationLister.createPagingByLocationObservationsByDate(page, location, calendar));
         model.addAttribute("page", page);
         model.addAttribute("datePath", date);
+        model.addAttribute("observationCount", locationHandler.countLocationObservations(location, calendar));
         return "location";
     }
 

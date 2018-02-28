@@ -20,7 +20,8 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Entity
 public class Observation extends AbstractPersistable<Long> {
 
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("hh:mm dd-MM-yyyy ");
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
+    private static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("hh:mm");
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
@@ -57,15 +58,16 @@ public class Observation extends AbstractPersistable<Long> {
     }
 
     public String getDisplayTime() {
+        
         int minute = observationTime.get(Calendar.MINUTE);
         int hourOfDay = observationTime.get(Calendar.HOUR_OF_DAY);
-        return "" + hourOfDay + ':' + minute;
+        return TIME_FORMAT.format(observationTime.getTime());
     }
 
     public String getDisplayDate() {
         int year = observationTime.get(Calendar.YEAR);
         int month = observationTime.get(Calendar.MONTH) + 1;
         int day = observationTime.get(Calendar.DAY_OF_MONTH);
-        return "" + day + '-' + month + '-' + year;
+        return DATE_FORMAT.format(observationTime.getTime());
     }
 }

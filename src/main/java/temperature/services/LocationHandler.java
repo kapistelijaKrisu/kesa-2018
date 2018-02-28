@@ -30,7 +30,7 @@ public class LocationHandler {
     public boolean checkAndSaveObservationToLocation(long locationId, String temperature) {
         try {
             int intTemperature = Integer.parseInt(temperature);
-            if (intTemperature > 100 ||intTemperature < -100) {
+            if (intTemperature > 100 || intTemperature < -100) {
                 throw new IllegalArgumentException("Don't think temperature can go above 100 or below 100 degrees");
             }
             Location location = locationRepository.getOne(locationId);
@@ -39,10 +39,19 @@ public class LocationHandler {
 
             Observation observation = new Observation(location, intTemperature, calendar);
             observationRepository.save(observation);
-            
+
             return true;
         } catch (NullPointerException | IllegalArgumentException e) {
             return false;
         }
+    }
+
+    public long countLocationObservations(Location location, Calendar date ) {
+        Calendar until = Calendar.getInstance();
+        until.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH), 23, 59, 59);
+        Calendar from = Calendar.getInstance();
+        from.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+
+        return observationRepository.countByLocationAndObservationTimeBetween(location, from, until);
     }
 }

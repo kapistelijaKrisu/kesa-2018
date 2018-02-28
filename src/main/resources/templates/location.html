@@ -7,11 +7,11 @@
         </style>
     </head>
     <body>
-        <h1 th:text="${location.name}"/>
         <table style="width:100%">
             <tbody>
                 <tr valign="top">
                     <td style="width:50%">
+                        <h1 th:text="${location.name}"/>
                         <p th:if="${error != null}" th:text="${error}"></p>
                         <p th:if="${success != null}" th:text="${success}"></p>
                         <div>
@@ -30,11 +30,29 @@
                         </div>
                         <div>
                             <h4>Aikavyöhyke</h4>
-                            <span th:text="${location.timezone.getDisplayName()}  "/> 
+                            <span th:text="${location.timezone.getDisplayName()}"/> 
+                        </div>
+                        <div>
+                            <h4 th:text="${'Havaintoja päivälle ' + {datePath} + ' yhteensä'}"/>
+                            <span th:text="${observationCount}"/> 
+                        </div>
+                        <div>
+                            <h4> Hae lämpötilalistaukset päivämäärän mukaan </h4>
+                            <form th:method="GET" th:action="${'/location/' + {location.id}}">  
+                                <input type="date" name="date" />
+                                <input type="submit" value="hae!"/> 
+                            </form>
                         </div>
                         <br/>
+                        <br/>
                         <div>
-                            <h3>Tiedot paikallisen ajan mukaan </h3>                                         
+                            <a href="/"> Etusivulle </a> 
+                        </div>
+                    </td>
+                    <td style="width:50%">
+                        <div>
+                            <h2>Tiedot paikallisen ajan mukaan</h2> 
+                            <br/>
                             <table>
                                 <thead>
                                     <tr>
@@ -66,14 +84,9 @@
                                 </tbody>
                             </table>
                         </div>
-                        <br/>
                         <div>
-                            <a href="/"> Etusivulle </a> 
-                        </div>
-                    </td>
-                    <td style="width:50%">
-                        <div>
-                            <h3 th:text="${'Havainnot päivälle ' + {datePath} + ' paikallista aikaa' }" />
+                            <br/>
+                            <h3 th:text="${'Havainnot päivälle ' + {datePath} + ' paikallista aikaa' }" />                      
                             <div th:if="${observations}">
                                 <table>
                                     <thead>
@@ -96,15 +109,7 @@
                             </div>
                             <div th:unless="${observations}">
                                 <p th:text="${'ei havaintoja sivulla: ' + {page} + '!'}"/>
-                            </div>
-                            <div>
-                                <p> Hae lämpötilalistaukset päivämäärän mukaan </p>
-                                <form th:method="GET" th:action="${'/location/' + {location.id}}">  
-                                    <input type="date" name="date" />
-                                    <input type="submit" value="hae!"/> 
-                                </form>
-                            </div>
-                            <br/> 
+                            </div>                            
                             <br/> 
                             <span>sivut:</span>
                             <div class="pages" th:each="page:${pages}">
