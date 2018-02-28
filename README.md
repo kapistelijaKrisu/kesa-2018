@@ -1,3 +1,7 @@
+
+
+##herokun osoite
+<br/> http://reaktorweatherman.herokuapp.com/
 # Tehtävänanto:
 
 Ilmastotieteilijät tarvitsevat uuden web-sovelluksen, jolla voivat seurata säätilan muutoksia ympäri maailmaa.
