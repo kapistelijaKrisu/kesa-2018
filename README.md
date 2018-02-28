@@ -1,6 +1,6 @@
 
 
-##herokun osoite
+## herokun osoite
 <br/> http://reaktorweatherman.herokuapp.com/
 # Tehtävänanto:
 
