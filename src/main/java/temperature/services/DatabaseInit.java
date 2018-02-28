@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 import java.util.TimeZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,13 +63,18 @@ public class DatabaseInit {
             TimeZone locationTimeZone = location.getTimezone();
             for (int i = 0; i < 1000; i++) {
                 
-                int temp = r.nextInt(60) - 30;
-                
-                Calendar time = Calendar.getInstance();
-                time.add(Calendar.MINUTE, r.nextInt(300000) * -1);
-                time.setTimeZone(locationTimeZone);
-                
-                observations.add(new Observation(location, temp, time));
+                try {
+                    int temp = r.nextInt(60) - 30;
+                    
+                    Calendar time = Calendar.getInstance();
+                    time.add(Calendar.MINUTE, r.nextInt(300000) * -1);
+                    time.setTimeZone(locationTimeZone);
+                    
+                    observations.add(new Observation(location, temp, time));
+                    Thread.sleep(10);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(DatabaseInit.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             return observations;
         }).forEachOrdered((obs) -> {
