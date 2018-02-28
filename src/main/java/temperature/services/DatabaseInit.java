@@ -59,12 +59,12 @@ public class DatabaseInit {
         locations.stream().map((location) -> {
             ArrayList<Observation> observations = new ArrayList<>();
             TimeZone locationTimeZone = location.getTimezone();
-            for (int i = 0; i < 10000; i++) {
+            for (int i = 0; i < 1000; i++) {
                 
                 int temp = r.nextInt(60) - 30;
                 
                 Calendar time = Calendar.getInstance();
-                time.add(Calendar.MINUTE, r.nextInt(400000) * -1);
+                time.add(Calendar.MINUTE, r.nextInt(300000) * -1);
                 time.setTimeZone(locationTimeZone);
                 
                 observations.add(new Observation(location, temp, time));
