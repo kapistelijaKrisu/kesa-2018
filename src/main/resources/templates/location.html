@@ -8,16 +8,12 @@
     </head>
     <body>
         <h1 th:text="${location.name}"/>
-
         <table style="width:100%">
             <tbody>
                 <tr valign="top">
-                    <td>
-
+                    <td style="width:50%">
                         <p th:if="${error != null}" th:text="${error}"></p>
                         <p th:if="${success != null}" th:text="${success}"></p>
-
-
                         <div>
                             <h4>Ilmoita Lämpötila (Celcius)</h4>
 
@@ -49,41 +45,37 @@
                                 <span>kuumin (24h aikan):</span>
                                 <span th:text="${hottest} ? ${hottest.formatPrintTempAndTime()} : 'ei havaintoja 24tunnin sisällä!'"></span>
                             </p>
-
-
                         </div>
                         <div>
                             <a href="/"> Etusivulle </a> 
                         </div>
                     </td>
-                    <td>
+                    <td style="width:50%">
                         <div>
-                            <h4>Havainnot</h4>
-
+                            <h4 th:text="${'Havainnot päivälle ' + {datePath} + ' paikallista aikaa' }" />
                             <div th:if="${observations}">
                                 <p th:each="temp:${observations} " >
                                     <span th:text="${temp.formatPrintTempAndTime()}" />
-                                </p>
-                                <br/>                               
+                                </p>                  
                             </div>
                             <div th:unless="${observations}">
-                                <p>ei havaintoja tällä sivulla!</p>
+                                <p th:text="${'ei havaintoja sivulla: ' + {page} + '!'}"/>
                             </div>
                             <div>
                                 <p> Hae lämpötilalistaukset päivämäärän mukaan </p>
                                 <form th:method="GET" th:action="${'/location/' + {location.id}}">  
-
                                     <input type="date" name="date" />
                                     <input type="submit" value="hae!"/> 
                                 </form>
                             </div>
+                            <br/> 
+                            <br/> 
                             <span>sivut:</span>
                             <div class="pages" th:each="page:${pages}">
                                 <a th:href="${page}" th:text="${page} "></a><br/>
                                 <span> </span>
                             </div>
                         </div>
-
                     </td>
                 </tr>
             </tbody>

@@ -2,11 +2,9 @@ package temperature.controllers;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 import temperature.services.ObservationListing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,19 +35,17 @@ public class LocationController {
             @PathVariable String date,
             @PathVariable int page) throws ParseException {
 
-        Location location = locationHandler.getLocation(id);
-        
-        model.addAttribute("location", location);
-        model.addAttribute("coldest", statService.coldestIn24h(location));
-        model.addAttribute("hottest", statService.hottestIn24h(location));
-        model.addAttribute("current", statService.getLatestObservation(location));
-
+        Location location = locationHandler.getLocation(id);       
         SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
         Date token = formatter.parse(date);
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(token);
         List<Observation> observations = observationLister.getObservationsByDate(location, page, calendar);
  
+        model.addAttribute("location", location);
+        model.addAttribute("coldest", statService.coldestIn24h(location));
+        model.addAttribute("hottest", statService.hottestIn24h(location));
+        model.addAttribute("current", statService.getLatestObservation(location));
         model.addAttribute("observations", observations);
         model.addAttribute("pages", observationLister.createPagingByLocationObservationsByDate(page, location, calendar));
         model.addAttribute("page", page);

@@ -15,6 +15,7 @@ import temperature.domain.Observation;
 import temperature.repository.ObservationRepository;
 
 @Service
+//returning nulls instead of empty list was easier with thymeleaf
 public class StatisticsService {
 
     @Autowired

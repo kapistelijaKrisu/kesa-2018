@@ -35,9 +35,9 @@ public class ObservationListing {
         return found;
     }
 
-    public List<Integer> createPagingByLocationObservationsByDate(int pageNro, Location location, Calendar date) {
-        List<Integer> pages = new ArrayList<>();
-        pages.add(0);
+    public List<Long> createPagingByLocationObservationsByDate(int pageNro, Location location, Calendar date) {
+        List<Long> pages = new ArrayList<>();
+        pages.add(0l);
         if (location == null) {
             return pages;
         }
@@ -52,15 +52,20 @@ public class ObservationListing {
             pageCount--;
         }
 
-        int smallestAbove0 = Math.max(pageNro - CONSECUTIVE_QUE_LENGTH, 1);
+        long smallestAbove0 = Math.max(pageNro - CONSECUTIVE_QUE_LENGTH, 1);
         long highestPageNro = Math.min(pageNro + CONSECUTIVE_QUE_LENGTH, pageCount);
+        //pageNro above highest page->give page of 0 list
+         if (smallestAbove0 > pageCount) {
+            smallestAbove0 = 1;
+            highestPageNro = Math.min(CONSECUTIVE_QUE_LENGTH, pageCount);
+        }
 
         int a = 1;
-        for (int i = smallestAbove0; i <= highestPageNro; i++) {
+        for (long i = smallestAbove0; i <= highestPageNro; i++) {
             pages.add(i);
         }
         if (highestPageNro != pageCount) {
-            pages.add((int) pageCount);
+            pages.add(pageCount);
         }
 
         return pages;

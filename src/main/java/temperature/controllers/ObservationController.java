@@ -38,7 +38,7 @@ public class ObservationController {
         if (success) {
             attributes.addFlashAttribute("success", "Lämpötila havainto vastaanotettu!");
         } else {
-            attributes.addFlashAttribute("error", "Lämpötilan havainto epäonnistui!\n Olihan lämpätila kirjoitettu oikein välille -100 ja 100C");
+            attributes.addFlashAttribute("error", "Lämpötilan havainto epäonnistui!\n Olihan lämpötila välillä -100 ja 100");
         }
     }
 }

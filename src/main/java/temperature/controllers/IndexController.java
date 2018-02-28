@@ -21,15 +21,18 @@ public class IndexController {
 
     @GetMapping("/")
     public String home(Model model) {
+        
         List<Location> locations = locationHandler.getAllLocations();
+        LocalDate today = LocalDate.now();
+        String datePath = today.getYear() + "-" + today.getMonthValue()+ "-" + today.getDayOfMonth();
+     
+        model.addAttribute("datePath", datePath);     
         model.addAttribute("coldest", statService.coldestIn24h(locations));
         model.addAttribute("hottest", statService.hottestIn24h(locations));
         model.addAttribute("last", statService.getLatestObservations(locations));
         model.addAttribute("locations", locations);
         
-        LocalDate today = LocalDate.now();
-        String datePath = today.getYear() + "-" + today.getMonthValue()+ "-" + today.getDayOfMonth();
-        model.addAttribute("datePath", datePath);
+        
         return "index";
     }
 }

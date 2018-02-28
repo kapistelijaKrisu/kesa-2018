@@ -2,6 +2,7 @@ package temperature.services;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Random;
 import java.util.TimeZone;
 import javax.annotation.PostConstruct;
@@ -25,6 +26,12 @@ public class DatabaseInit {
         if (locationRepository.count() != 0) {
             return;
         }
+        List<Location> locations = initLocations();
+        initObservations(locations);
+        
+    }
+    
+    private List<Location> initLocations() {
         Location tokio = new Location("Tokio", 35.6584421, 139.7328635, TimeZone.getTimeZone("Asia/Tokyo"), null);
         Location helsinki = new Location("Helsinki", 60.1697530, 24.9490830, TimeZone.getTimeZone("Europe/Helsinki"), null);
         Location newYork = new Location("New York", 40.7406905, -73.9938438, TimeZone.getTimeZone("America/New_York"), null);
@@ -37,23 +44,32 @@ public class DatabaseInit {
         locationRepository.save(amsterdam);
         locationRepository.save(dubai);
 
-        ArrayList<Location> a = new ArrayList<>();
-        a.add(dubai);
-        a.add(amsterdam);
-        a.add(newYork);
-        a.add(helsinki);
-        a.add(tokio);
+        ArrayList<Location> allLocations = new ArrayList<>();
+        allLocations.add(dubai);
+        allLocations.add(amsterdam);
+        allLocations.add(newYork);
+        allLocations.add(helsinki);
+        allLocations.add(tokio);
+        return allLocations;
+    }
+    
+    //olishan se voitu toteuttaa kyselynä, mutta lista saadaan kuitenkin
+    private void initObservations(List<Location> locations) {
         Random r = new Random();
-        a.stream().map((location) -> {
-            ArrayList<Observation> obs = new ArrayList<>();
+        locations.stream().map((location) -> {
+            ArrayList<Observation> observations = new ArrayList<>();
+            TimeZone locationTimeZone = location.getTimezone();
             for (int i = 0; i < 10000; i++) {
+                
                 int temp = r.nextInt(60) - 30;
-                Calendar c = Calendar.getInstance();
-                c.add(Calendar.MINUTE, r.nextInt(400000) * -1);
-
-                obs.add(new Observation(location, temp, c));
+                
+                Calendar time = Calendar.getInstance();
+                time.add(Calendar.MINUTE, r.nextInt(400000) * -1);
+                time.setTimeZone(locationTimeZone);
+                
+                observations.add(new Observation(location, temp, time));
             }
-            return obs;
+            return observations;
         }).forEachOrdered((obs) -> {
             observationRepository.save(obs);
         });

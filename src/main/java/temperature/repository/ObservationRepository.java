@@ -11,8 +11,6 @@ public interface ObservationRepository extends JpaRepository<Observation, Long> 
 
     public List<Observation> findByLocation(Location location, Pageable page);
 
-    Long countByLocation(Location location);
-
     public List<Observation> findByLocationAndObservationTimeBetween(Location location, Calendar from, Calendar until, Pageable page);
 
     public long countByLocationAndObservationTimeBetween(Location location, Calendar from, Calendar until);

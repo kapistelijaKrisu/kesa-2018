@@ -19,14 +19,13 @@
         <div>
             <ul>
                 <li th:each="location:${locations}">
-                    <a th:href="${'/location/' + {location.id} +'/' + {datePath} + '/0'}"  th:text="${location.name}"/>
-                       
+                    <a th:href="${'/location/' + {location.id} +'/' + {datePath} + '/0'}"  th:text="${location.name}"/>          
                     <br/> 
                 </li>
             </ul>
         </div>
         <div>
-            <h3>havainnot paikallisen ajan mukaan</h3>
+            <h3>Havainnot paikallisen ajan mukaan</h3>
         </div>
         <div>
             <table>
@@ -40,7 +39,6 @@
                     </tr>
                 </thead>
                 <tbody>
-
                     <tr th:each="location:${locations}">
                         <td> <a th:href="${'/location/' + {location.id} +'/' + {datePath} + '/0'}"  th:text="${location.name}"/> </td>
                         <td>
@@ -50,11 +48,8 @@
                             </form>
                         </td>
                         <td th:text="${last[location.id]} ? ${last[location.id].formatPrintTempAndTime()} : 'ei havaintoja!'"></td>
-
-                       <td th:text="${hottest[location.id]} ? ${hottest[location.id].formatPrintTempAndTime()} : 'ei havaintoja!'"></td>
+                        <td th:text="${hottest[location.id]} ? ${hottest[location.id].formatPrintTempAndTime()} : 'ei havaintoja!'"></td>
                         <td th:text="${coldest[location.id]} ? ${coldest[location.id].formatPrintTempAndTime()} : 'ei havaintoja!'"></td>
-
-                        
                     </tr>
                 </tbody>
             </table>

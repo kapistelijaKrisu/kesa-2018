@@ -31,7 +31,7 @@ public class LocationHandler {
         try {
             int intTemperature = Integer.parseInt(temperature);
             if (intTemperature > 100 ||intTemperature < -100) {
-                throw new IllegalArgumentException("We don't think temperature can go above 100 or below 100 degrees");
+                throw new IllegalArgumentException("Don't think temperature can go above 100 or below 100 degrees");
             }
             Location location = locationRepository.getOne(locationId);
             Calendar calendar = Calendar.getInstance();
@@ -39,8 +39,7 @@ public class LocationHandler {
 
             Observation observation = new Observation(location, intTemperature, calendar);
             observationRepository.save(observation);
-        //    location.getObservations().add(observation);
-        //    locationRepository.save(location);
+            
             return true;
         } catch (NullPointerException | IllegalArgumentException e) {
             return false;
