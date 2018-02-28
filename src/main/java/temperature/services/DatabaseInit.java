@@ -67,7 +67,7 @@ public class DatabaseInit {
                     int temp = r.nextInt(60) - 30;
                     
                     Calendar time = Calendar.getInstance();
-                    time.add(Calendar.MINUTE, r.nextInt(10000) * -1);
+                    time.add(Calendar.MINUTE, r.nextInt(20000) * -1);
                     time.setTimeZone(locationTimeZone);
                     
                     observations.add(new Observation(location, temp, time));
