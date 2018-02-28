@@ -71,7 +71,7 @@ public class DatabaseInit {
                     time.setTimeZone(locationTimeZone);
                     
                     observations.add(new Observation(location, temp, time));
-                    Thread.sleep(20);
+                    Thread.sleep(5);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(DatabaseInit.class.getName()).log(Level.SEVERE, null, ex);
                 }
